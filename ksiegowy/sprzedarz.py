@@ -4,8 +4,7 @@ r=Magazyn(sciezka)
 lista=r.lista()
 fundusz=r.saldo2()
 magazyn=r.odczyt()
-for i in range(1):
-    stop=input()
+while True:
     print("podaj id produktu")
     id = input()
     lista.append(id)
@@ -18,11 +17,8 @@ for i in range(1):
     lista.append(cena)
 
     if id in magazyn:
-        magazyn[id]+=ilosc
-        fundusz-=cena*ilosc
+        magazyn[id]-=ilosc
+        fundusz+=cena*ilosc
     else:
         magazyn[id]=ilosc
-        fundusz-=cena*ilosc
-    if stop=="stop":
-        break
-r.zapis(lista)
+        fundusz+=cena*ilosc

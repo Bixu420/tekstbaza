@@ -5,7 +5,7 @@ sciezka=sys.argv[1]
 class Magazyn:
     def __init__(self, sciezka):
         self.sciezka=sciezka
-        self.magazyn={}
+        self.magazyn=[]
         self.historia=[]
         self.calkowite=0
         self.baza=baza
@@ -26,7 +26,22 @@ class Magazyn:
 
 
 
+    def saldo2(self):
+        lista=self.lista()
+        i=0
 
+        while i!=len(lista):
+            if lista [i]=="zakup":
+                self.calkowite -= int(lista[i+3])
+
+            if lista[i]=="sprzedarz":
+                self.calkowite +=int (lista[i+3])
+
+
+            if lista[i]=="saldo":
+                self.calkowite = int(lista[i+1])
+            i=i+1
+        return self.calkowite
     def saldo(self, saldo, komentarz):
         if saldo+self.calkowite<0:
             print("za mala kwota")
@@ -49,25 +64,35 @@ class Magazyn:
     def odczyt(self):
 
             lista = self.lista()
-            for i in len(lista):
-                if(lista[i])=="zakup":
+            i=0
+            while i!=len(lista):
+                if lista[i]=="zakup":
                     lista[i+2]=int(lista[i+2])
                     if lista[i+1] in self.magazyn:
                         self.magazyn[lista[i+1]]+=lista[i+2]
                         self.calkowite += lista[i + 2]
                     else:
                         self.magazyn[lista[i+1]]=lista[i+2]
-
+                i=i+1
                 return self.magazyn
-            for i in len(lista):
+            i=0
+            while i!=len(lista):
                 if(lista[i])=="sprzedarz":
                     lista[i+2]=int(lista[i+2])
                     if lista[i+1] in self.magazyn:
                         self.magazyn[lista[i+1]]-=lista[i+2]
 
-                        return self.magazyn
-                    else:
-                     return False
+                i = i + 1
+                return self.magazyn
+
+
+    def zapis(self, lista):
+        open(self.sciezka, 'w').close()
+        with open(self.sciezka, "a") as plik:
+
+            for i in range(len(lista)):
+                plik.write(str(lista[i]))
+                plik.write("\n")
 
 
 
@@ -87,5 +112,6 @@ class Fundusz:
         with open("statussalda.txt", "w") as plik1:
             plik1.write(self.calkowite)
         return self.calkowite
-magazyn=Magazyn(sciezka).odczyt()
-print(magazyn)
+
+lol=(Magazyn(sciezka).lista())
+print (len(lol))
