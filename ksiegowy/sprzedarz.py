@@ -1,10 +1,13 @@
 import sys
 from main2 import Magazyn, sciezka
+
 r=Magazyn(sciezka)
 lista=r.lista()
 fundusz=r.saldo2()
 magazyn=r.odczyt()
-while True:
+lista.append("zakup")
+for i in range(1):
+    stop=input()
     print("podaj id produktu")
     id = input()
     lista.append(id)
@@ -21,4 +24,7 @@ while True:
         fundusz+=cena*ilosc
     else:
         magazyn[id]=ilosc
-        fundusz+=cena*ilosc
+        fundusz-=cena*ilosc
+    if stop=="stop":
+        break
+r.zapis(lista)

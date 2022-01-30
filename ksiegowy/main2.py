@@ -5,7 +5,7 @@ sciezka=sys.argv[1]
 class Magazyn:
     def __init__(self, sciezka):
         self.sciezka=sciezka
-        self.magazyn=[]
+        self.magazyn={}
         self.historia=[]
         self.calkowite=0
         self.baza=baza
@@ -27,21 +27,32 @@ class Magazyn:
 
 
     def saldo2(self):
+
         lista=self.lista()
-        i=0
+        hajs=self.calkowite
 
-        while i!=len(lista):
-            if lista [i]=="zakup":
-                self.calkowite -= int(lista[i+3])
+        for i in range(len(lista)):
 
-            if lista[i]=="sprzedarz":
-                self.calkowite +=int (lista[i+3])
+            if lista[i] == "zakup":
+
+                lista[i + 2] = int(lista[i + 2])
+                lista[i + 3] = int(lista[i + 3])
+                hajs -= (lista[i + 3] * lista[i + 2])
+
+            if lista[i] == "sprzedarz":
+
+                lista[i + 2] = int(lista[i + 2])
+                lista[i + 3] = int(lista[i + 3])
+                hajs += (lista[i + 3] * lista[i + 2])
+
+            if lista[i] == "saldo":
+
+                lista[i + 1] = int(lista[i + 1])
+                hajs += lista[i + 1]
+        return hajs
 
 
-            if lista[i]=="saldo":
-                self.calkowite = int(lista[i+1])
-            i=i+1
-        return self.calkowite
+
     def saldo(self, saldo, komentarz):
         if saldo+self.calkowite<0:
             print("za mala kwota")
@@ -51,44 +62,44 @@ class Magazyn:
         return True
 
     def lista(self):
+        if self.baza:
+            return self.baza
         with open (self.sciezka, "r") as t:
-            while True:
+            for i in range(self.linie()):
                 linia = t.readline().strip()
                 self.baza.append(linia)
-                if linia == "":
 
 
-                 break
-            return self.baza
+
+
+        return self.baza
 
     def odczyt(self):
 
             lista = self.lista()
-            i=0
-            while i!=len(lista):
+
+            for i in range(len(lista)):
+                print(lista[i])
                 if lista[i]=="zakup":
+
                     lista[i+2]=int(lista[i+2])
                     if lista[i+1] in self.magazyn:
-                        self.magazyn[lista[i+1]]+=lista[i+2]
-                        self.calkowite += lista[i + 2]
+                        self.magazyn[lista[i+1]]=self.magazyn.get(lista[i+1])+lista[i+2]
                     else:
                         self.magazyn[lista[i+1]]=lista[i+2]
-                i=i+1
-                return self.magazyn
-            i=0
-            while i!=len(lista):
                 if(lista[i])=="sprzedarz":
                     lista[i+2]=int(lista[i+2])
                     if lista[i+1] in self.magazyn:
-                        self.magazyn[lista[i+1]]-=lista[i+2]
+                        self.magazyn[lista[i+1]]=self.magazyn.get(lista[i+1])-lista[i+2]
+            return self.magazyn
 
-                i = i + 1
-                return self.magazyn
-
-
+    def linie(self):
+        with open(self.sciezka, 'r') as fp:
+            for count, line in enumerate(fp):
+                pass
+        return count+1
     def zapis(self, lista):
-        open(self.sciezka, 'w').close()
-        with open(self.sciezka, "a") as plik:
+        with open(self.sciezka,"w") as plik:
 
             for i in range(len(lista)):
                 plik.write(str(lista[i]))
@@ -113,5 +124,5 @@ class Fundusz:
             plik1.write(self.calkowite)
         return self.calkowite
 
-lol=(Magazyn(sciezka).lista())
-print (len(lol))
+lol=(Magazyn(sciezka).saldo2())
+print (lol)

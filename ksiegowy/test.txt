@@ -1,0 +1,12 @@
+sprzedarz
+bib
+5
+200
+saldo
+2000
+lool
+zakup
+bleb
+1
+1000
+
