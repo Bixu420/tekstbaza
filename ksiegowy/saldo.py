@@ -25,12 +25,12 @@ for i in range(len(lista)):
         calkowite += lista[i + 1]
 
 lista.append("saldo")
-print("podaj saldo")
-saldo=int(input())
+
+saldo=int(sys.argv[2])
 lista.append(str(saldo))
 
-print("podaj komentarz")
-komentarz=str(input())
+
+komentarz=str(sys.argv[3])
 lista.append(komentarz)
 
 

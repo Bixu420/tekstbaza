@@ -104,25 +104,5 @@ class Magazyn:
             for i in range(len(lista)):
                 plik.write(str(lista[i]))
                 plik.write("\n")
-
-
-
-
-
-
-
-
-class Fundusz:
-    def __init__(self, calkowite):
-        self.calkowite=calkowite
-
-
-
-    def wpis(self):
-        self.calkowite = str(self.calkowite)
-        with open("statussalda.txt", "w") as plik1:
-            plik1.write(self.calkowite)
-        return self.calkowite
-
 lol=(Magazyn(sciezka).saldo2())
 print (lol)

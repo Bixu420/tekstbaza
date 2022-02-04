@@ -7,24 +7,24 @@ fundusz=r.saldo2()
 magazyn=r.odczyt()
 lista.append("zakup")
 for i in range(1):
-    stop=input()
-    print("podaj id produktu")
-    id = input()
+
+    id = input(sys.argv[2])
     lista.append(id)
-    print("podaj liczbe sztuk")
-    ilosc = int(input())
+
+    ilosc = int(sys.argv[3])
     lista.append(ilosc)
 
-    print("podaj cene")
-    cena=int(input())
+    cena=int(sys.argv[4])
     lista.append(cena)
 
     if id in magazyn:
         magazyn[id]-=ilosc
+        if magazyn[id]<0:
+            print("za malo produktow")
+            exit()
         fundusz+=cena*ilosc
     else:
         magazyn[id]=ilosc
         fundusz-=cena*ilosc
-    if stop=="stop":
-        break
+
 r.zapis(lista)
