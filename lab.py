@@ -12,7 +12,7 @@ headers = {
 class Weather:
     def __init__(self):
         self.test=""
-        self.baza=[]
+        self.baza={}
         self.lines=0
 
 
@@ -22,18 +22,24 @@ class Weather:
         with open("logi.txt", "r") as file:
             for line in file:
 
-                line=line.strip()
+                line=file.readline().strip()
+                line1=file.readline().strip()
                 if line == "\n":
                     continue
                 print(line)
-                base.append(line)
+                base[line]=line1
             print(base)
         return base
-    def check(self, date):
-        baza=self.list()
-        for i in range(len(baza)):
-            if baza[i] == date:
-               return True
+    def check(self, date, base):
+        baza=[]
+        if date in base.keys():
+            baza = [date, base[date]]
+            return baza
+        else:
+            return False
+
+
+
 
 
 
@@ -44,34 +50,65 @@ class Weather:
             with open("test.txt", "w") as file:
                 file.write(response.text)
             return False
-    def action(self, response, date):
+    def action(self, response, date, base):
         data=response.json()
         for i in range(len(data["data"])):
+            ciag=data["data"][i]["weather"]["description"]
             if date in data["data"][i]["timestamp_local"]:
-                if "snow" or "rain" in data["data"][i]["weather"]["description"]:
+                if "snow" in ciag or "rain" in ciag:
+
                     with open("logi.txt", "a") as fp:
-                        self.baza.append(date)
-                        for i in range(len(self.baza)):
-                            fp.write(self.baza[i])
-                            fp.write("\n")
+                        base[date]="bedzie padac"
+                        fp.write("\n")
+                        fp.write(date)
+                        fp.write("\n")
+                        fp.write("bedzie padac")
 
                     print("bedzie padac")
+                    print(base)
+                    break
+                else:
+                    with open("logi.txt", "a") as fp:
+                        base[date]="nie bedzie padac"
+                        fp.write("\n")
+                        fp.write(date)
+                        fp.write("\n")
+                        fp.write("nie bedzie padac")
+                    print("nie bedzie padac")
+                    print(base)
 
-                break
+                    break
+        return base
+    def items(self,lol):
+
+        return lol.items()
+    def items2(self, base):
+        return base.items()
+
+
 print("podaj date")
 date=str(input())
 sc=Weather()
-baza=sc.list
+base=sc.list()
 print(date, "c1")
-if sc.check(date):
-    print("wczytane")
-    print("bedzie padac")
-    quit()
-
-else:
+check=sc.check(date, base)
+if check is False:
     response = requests.request("GET", url, headers=headers, params=querystring)
     sc.check2(response)
-    sc.action(response, date)
+    lol=sc.action(response, date, base)
+    for x, y in sc.items(lol):
+        print(x, y)
+
+else:
+    print(check[0], check[1])
+    for x, y in sc.items2(base):
+        print(x, y)
+
+
+
+
+
+
 
 
 
