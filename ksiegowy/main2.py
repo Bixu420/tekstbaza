@@ -68,16 +68,10 @@ class Magazyn:
             for i in range(self.linie()):
                 linia = t.readline().strip()
                 self.baza.append(linia)
-
-
-
-
         return self.baza
 
     def odczyt(self):
-
             lista = self.lista()
-
             for i in range(len(lista)):
                 print(lista[i])
                 if lista[i]=="zakup":

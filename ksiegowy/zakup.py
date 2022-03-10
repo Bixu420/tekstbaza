@@ -14,8 +14,6 @@ for i in range(1):
 
     ilosc = int(sys.argv[3])
     lista.append(ilosc)
-
-
     cena=int(sys.argv[4])
     lista.append(cena)
 
@@ -29,11 +27,11 @@ for i in range(1):
     else:
         magazyn[id]=ilosc
         fundusz-=cena*ilosc
+
         if fundusz<0:
             print("nie starczy funduszy")
             exit()
-    if stop=="stop":
-        break
+
 print(magazyn)
 r.zapis(lista)
 print(fundusz)

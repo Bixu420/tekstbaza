@@ -42,4 +42,3 @@ Magazyn(sciezka).zapis(lista)
 
 
 
-
