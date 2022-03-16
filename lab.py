@@ -74,7 +74,7 @@ class Weather:
 
         for i in range(len(data["data"])):
             ciag=data["data"][i]["weather"]["description"]
-            if date1 in data["data"][i]["timestamp_local"]:
+            if date1 in data["data"][i]["datetime"]:
                 if "snow" in ciag or "rain" in ciag:
 
                     with open("logi.txt", "a") as fp:
